@@ -31,48 +31,46 @@ const AIService = {
    * @param {string} content 
    * @returns {Promise<string>}
    */
-  improveWriting: async (content) => {
+  /**
+   * Rewrite content more clearly
+   */
+  rewriteClearly: async (content) => {
     return new Promise((resolve) => {
       setTimeout(() => {
         if (!content || content === '<p><br></p>') resolve(content);
-        
-        // Simulate professional rewriting
-        let improved = content
-          .replace(/good/gi, '<strong>exceptional</strong>')
-          .replace(/bad/gi, '<strong>suboptimal</strong>')
-          .replace(/very/gi, '<strong>significantly</strong>')
-          .replace(/usefull/gi, '<strong>useful</strong>')
-          .replace(/i think/gi, '<strong>it is evident that</strong>')
-          .replace(/a lot of/gi, '<strong>numerous</strong>');
-        
-        resolve(improved);
-      }, 2000);
+        resolve(`<div class="ai-improved-clear">${content.replace(/(\. )/g, '. <br/><br/>')}</div><p><em>[Rewritten for clarity]</em></p>`);
+      }, 1500);
     });
   },
 
   /**
-   * Suggest relevant tags based on content
-   * @param {string} title
-   * @param {string} content 
-   * @returns {Promise<string[]>}
+   * Improve grammar
    */
-  suggestTags: async (title, content) => {
+  improveGrammar: async (content) => {
     return new Promise((resolve) => {
       setTimeout(() => {
-        const keywords = ['react', 'javascript', 'web-dev', 'tech', 'programming', 'ai', 'frontend', 'backend'];
-        const fullText = (title + ' ' + content).toLowerCase();
-        const suggested = keywords.filter(word => fullText.includes(word));
-        
-        // Return at least some default tags if no match
-        resolve(suggested.length > 0 ? suggested : ['technology', 'article']);
-      }, 1000);
+        if (!content || content === '<p><br></p>') resolve(content);
+        // Mocking grammar fix
+        resolve(content.replace(/usefull/gi, 'useful').replace(/i think/gi, 'it is evident that'));
+      }, 1200);
     });
   },
 
   /**
-   * Suggest a catchy title
-   * @param {string} content 
-   * @returns {Promise<string>}
+   * Make content more concise
+   */
+  makeConcise: async (content) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const plainText = content.replace(/<[^>]*>/g, '');
+        if (plainText.length < 50) resolve(content);
+        resolve(`<p>${plainText.substring(0, plainText.length / 2)}...</p><p><em>[Condensed for conciseness]</em></p>`);
+      }, 1800);
+    });
+  },
+
+  /**
+   * Suggest a better title
    */
   suggestTitle: async (content) => {
     return new Promise((resolve) => {
