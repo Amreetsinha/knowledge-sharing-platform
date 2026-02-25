@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import ArticleService from '../services/ArticleService';
 import Navbar from '../components/Navbar';
+import AIAssistant from '../components/AIAssistant';
 
 import ReactQuill from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
@@ -65,6 +66,10 @@ const EditArticle = () => {
     setFormData(prev => ({ ...prev, content }));
   };
 
+  const updateTitle = (title) => setFormData(prev => ({ ...prev, title }));
+  const updateContent = (content) => setFormData(prev => ({ ...prev, content }));
+  const updateTags = (tags) => setFormData(prev => ({ ...prev, tags }));
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.content || formData.content === '<p><br></p>') {
@@ -117,6 +122,14 @@ const EditArticle = () => {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-8">
+          <AIAssistant 
+            content={formData.content}
+            title={formData.title}
+            tags={formData.tags}
+            onUpdateTitle={updateTitle}
+            onUpdateContent={updateContent}
+            onUpdateTags={updateTags}
+          />
           <div className="bg-zinc-900/40 backdrop-blur-xl border border-white/5 rounded-2xl p-6 md:p-8 space-y-6">
             <div>
               <label className="block text-sm font-bold text-zinc-400 mb-2 uppercase tracking-wider">Article Title</label>
